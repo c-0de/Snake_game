@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ssshhh</title>
+        <link rel="stylesheet" href="b.css">
+    </head>
+    <body>
+        <div id="frame">
+            <div id="pt">
+                <p id="currpt">Score: 0</p>
+            </div>
+            <div>
+                <p id="Hpt" hidden>Score to beat: 0</p>
+            </div>
+            <div id="grid"></div>
+            <button id="start">Click to play</button>
+        </div>
+        <p id="demo"></p>
+
+        <script>
+
+            let ske="";
+            let idx=[];
+            let grass='url("grass50.jpg")';
+            let stop=true;
+            let cmd="RT";
+            let p_cmd="RT";
+            let speed = 80;
+            let points=0;
+            let highest=0;
+            let pointidx="15-30";
+            let snake=["15-2","15-3","15-4","15-5","15-6","15-7","15-8","15-9"];
+            const n=30,m=40;
+            const bgcolor="#86B049";
+            const snakecolor="#295E11";
+
+            for(let i=0;i<n;i++){
+                for(let j=0;j<m;j++)
+                    idx.push([i,j]);
+            }
+
+            for(let i=0;i<n*m;i++){
+                ske+=`<div id=${idx[i][0]}-${idx[i][1]}> </div>`;
+            }
+            document.getElementById("grid").innerHTML=ske;
+
+            let col="";
+            for(let i=0;i<m;i++){
+                col+="auto ";
+            }
+            document.getElementById("grid").style.gridTemplateColumns=col;
+
+            document.addEventListener("click",()=>eff());
+            document.addEventListener("keypress",()=>id_(event));
+
+            let eff=()=>{
+                if(stop){
+                    document.getElementById("start").hidden=true;  
+                    for(let i=0;i<snake.length;i++){
+                        document.getElementById(snake[i]).style.backgroundImage=grass;
+                    }
+                    document.getElementById(pointidx).style.backgroundImage=grass;
+                    
+                    highest=Math.max(highest,points);
+                    document.getElementById("Hpt").innerHTML="Score to beat: "+highest;
+
+                    if(points>0){
+                        document.getElementById("pt").style.left="20%";
+                        document.getElementById("Hpt").removeAttribute("Hidden");
+                    }
+
+                    cmd="RT";
+                    p_cmd="RT";
+                    speed = 80;
+                    points = 0;
+                    pointidx="15-30";
+                    snake=["15-2","15-3","15-4","15-5","15-6","15-7","15-8","15-9"];
+                    stop=false;
+
+                    let recur=(i,j)=>{
+                        setTimeout(()=>{
+                            if(i<0 || i>=n || j<0 || j>=m) {stop=true;re();return;}
+                            if(cmd=="DW"){
+                                document.getElementById(`${i}-${j}`).style.backgroundImage="none";
+                                document.getElementById(`${i}-${j}`).style.backgroundColor=snakecolor;
+                                if(snake.includes(`${i}-${j}`) || stop){
+                                    stop=true;
+                                    re();
+                                    return;
+                                }
+
+                                if(snake.includes(pointidx)){
+                                    points++;
+                                    document.getElementById("currpt").innerHTML="Score: "+points;
+                                    let ro = Math.floor(Math.random()*n);
+                                    let cl = Math.floor(Math.random()*m);
+                                    pointidx=ro.toString()+"-"+cl.toString();
+                                    while(snake.includes(pointidx)){
+                                        ro = Math.floor(Math.random()*n);
+                                        cl = Math.floor(Math.random()*m);
+                                        pointidx=ro.toString()+"-"+cl.toString();
+                                    }
+                                    document.getElementById(pointidx).style.backgroundImage="none";
+                                    document.getElementById(pointidx).style.backgroundColor="brown";
+                                }
+                                else document.getElementById(snake.shift()).style.backgroundImage=grass;
+                                snake.push(`${i}-${j}`);
+                                recur(i+1,j);
+                            }
+                            if(cmd=="LF"){
+                                document.getElementById(`${i}-${j}`).style.backgroundImage="none";
+                                document.getElementById(`${i}-${j}`).style.backgroundColor=snakecolor;
+                                if(snake.includes(`${i}-${j}`)|| stop){
+                                    stop=true;
+                                    re();
+                                    return;
+                                }
+
+                                if(snake.includes(pointidx)){
+                                    points++;
+                                    document.getElementById("currpt").innerHTML="Score: "+points;
+                                    let ro = Math.floor(Math.random()*n);
+                                    let cl = Math.floor(Math.random()*m);
+                                    pointidx=ro.toString()+"-"+cl.toString();
+                                    while(snake.includes(pointidx)){
+                                        ro = Math.floor(Math.random()*n);
+                                        cl = Math.floor(Math.random()*m);
+                                        pointidx=ro.toString()+"-"+cl.toString();
+                                    }
+                                    document.getElementById(pointidx).style.backgroundImage="none";
+                                    document.getElementById(pointidx).style.backgroundColor="brown";
+                                }
+                                else document.getElementById(snake.shift()).style.backgroundImage=grass;
+
+                                snake.push(`${i}-${j}`);
+                                recur(i,j-1);
+                            }
+                            if(cmd=="RT"){
+                                document.getElementById(`${i}-${j}`).style.backgroundImage="none";
+                                document.getElementById(`${i}-${j}`).style.backgroundColor=snakecolor;
+                                if(snake.includes(`${i}-${j}`) || stop){
+                                    stop=true;
+                                    re();
+                                    return;
+                                }
+
+                                if(snake.includes(pointidx)){
+                                    points++;
+                                    document.getElementById("currpt").innerHTML="Score: "+points;
+                                    let ro = Math.floor(Math.random()*n);
+                                    let cl = Math.floor(Math.random()*m);
+                                    pointidx=ro.toString()+"-"+cl.toString();
+                                    while(snake.includes(pointidx)){
+                                        ro = Math.floor(Math.random()*n);
+                                        cl = Math.floor(Math.random()*m);
+                                        pointidx=ro.toString()+"-"+cl.toString();
+                                    }
+                                    document.getElementById(pointidx).style.backgroundImage="none";
+                                    document.getElementById(pointidx).style.backgroundColor="brown";
+                                }
+                                else document.getElementById(snake.shift()).style.backgroundImage=grass;
+
+                                snake.push(`${i}-${j}`);
+                                recur(i,j+1);
+                            }
+                            if(cmd=="UP"){
+                                document.getElementById(`${i}-${j}`).style.backgroundImage="none";
+                                document.getElementById(`${i}-${j}`).style.backgroundColor=snakecolor;
+                                if(snake.includes(`${i}-${j}`)|| stop){
+                                    stop=true;
+                                    re();
+                                    return;
+                                }
+
+                                if(snake.includes(pointidx)){
+                                    points++;
+                                    document.getElementById("currpt").innerHTML="Score: "+points;
+                                    let ro = Math.floor(Math.random()*n);
+                                    let cl = Math.floor(Math.random()*m);
+                                    pointidx=ro.toString()+"-"+cl.toString();
+                                    while(snake.includes(pointidx)){
+                                        ro = Math.floor(Math.random()*n);
+                                        cl = Math.floor(Math.random()*m);
+                                        pointidx=ro.toString()+"-"+cl.toString();
+                                    }
+                                    document.getElementById(pointidx).style.backgroundImage="none";
+                                    document.getElementById(pointidx).style.backgroundColor="brown";
+                                }
+                                else document.getElementById(snake.shift()).style.backgroundImage=grass;
+                                
+                                snake.push(`${i}-${j}`);
+                                recur(i-1,j);
+                            }
+                        },speed);
+                    }
+                    document.getElementById("currpt").innerHTML="Score: "+0;
+                    document.getElementById(pointidx).style.backgroundImage="none";
+                    document.getElementById(pointidx).style.backgroundColor="brown";
+                    recur(15,10);
+                }
+            };
+
+            let re=()=>{
+                document.getElementById("start").hidden=false;
+            }
+            
+            let id_=(event)=>{
+                p_cmd=cmd;
+                let val=event.which;
+                if(val==119 && p_cmd!="DW") cmd="UP";
+                else if(val==115 && p_cmd!="UP") cmd="DW";
+                else if(val==97 && p_cmd!="RT") cmd="LF";
+                else if(val==100 && p_cmd!="LF") cmd="RT"
+            }
+
+        </script>
+
+    </body>
+</html>

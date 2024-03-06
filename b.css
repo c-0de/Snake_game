@@ -1,0 +1,58 @@
+#frame{
+    position: absolute;
+    width: 55%;
+    height: 94.5%;
+    background-color: #295E11;
+    border-style: solid;
+    border-color: #86B049;
+    top:4%;
+    left:23%;
+}
+
+#pt{
+    position: absolute;
+    top: 20px;
+    left: 44%;
+    color: wheat; 
+    font-weight: bold;
+    font-size: 140%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#Hpt{
+    position: absolute;
+    top: 20px;
+    left: 58%;
+    color: wheat; 
+    font-weight: bold;
+    font-size: 140%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#grid{
+    position: absolute;
+    display: inline-grid;
+    top:15%;
+    left:2.7%;
+}
+
+#grid div{
+    background-image: url("grass50.jpg");
+    background-color: rgba(20, 125, 38, 0.8);
+    padding: 10px;
+}
+
+button{
+    position: absolute;
+    background-color: rgba(20, 125, 38, 0.1);
+    border-style: none;
+    border-width: 7px;
+    color:#295E11;
+    font-size: 50px;
+    font-weight: bolder;
+    font-family: monospace;
+    height: 80.3%;
+    width: 95%;
+    top: 15%;
+    left: 2.5%;
+}
